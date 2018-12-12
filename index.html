@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>天气查询</title>
+    <script src="./js/jquery-3.3.1.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./js/bootstrap.js"></script>
+    <script type="text/javascript" src="./js/functions.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script type="text/javascript">
+        window.onload = function() {
+            setTimeout(function(){},1000);
+            addCities();
+            $('.curtain').remove();
+            $('body').removeClass('is-loading');
+            oTop = document.getElementById("to_top");
+            screenw = document.documentElement.clientWidth || document.body.clientWidth;
+            screenh = document.documentElement.clientHeight || document.body.clientHeight;
+            oTop.style.left = screenw - oTop.offsetWidth +"px";
+            oTop.style.top = screenh - oTop.offsetHeight + "px";
+            window.onscroll = function(){
+                scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+                oTop.style.top = screenh - oTop.offsetHeight + scrolltop +"px";
+            };
+            oTop.onclick = function(){
+                document.documentElement.scrollTop = document.body.scrollTop =0;
+            };
+        };
+        // return-to-top button
+        window.onscroll = function(){
+            t = document.documentElement.scrollTop || document.body.scrollTop;
+            top_div = document.getElementById( "top_div" );
+            if( t >= 400 ) {
+                top_div.style.display = "block";
+                if(t<=600)  top_div.style.opacity = (t-400) * 0.005;
+                else top_div.style.opacity = 1;
+            } else {
+                top_div.style.display = "none";
+            }
+        };
+        function totop(){
+            currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(totop);
+                window.scrollTo (0,currentScroll - (currentScroll/5));
+            }
+        }
+    </script>
+    <script src="js/functions.js"></script>
+</head>
+
+<!-- return to top button -->
+<a>
+    <div id="top_div">
+        <a>
+            <img src="./img/background/top.png" title="回到顶部" onclick="totop()">
+        </a>
+    </div>
+</a>
+<!-- end of return to top button -->
+
+<body style="background-attachment: fixed;" id="particles-js" class="is-loading">
+
+    <div class="curtain" style="z-index: 10000;">
+        <div class="loader">
+            loading...
+        </div>
+    </div>
+
+    <!--particles-->
+    <div style=""></div>
+    <script src="./js/particles.min.js"></script>
+    <script type="text/javascript">
+        particlesJS('particles-js',
+            {
+                "particles": {
+                    "number": {
+                        "value": 110,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        },
+                        "image": {
+                            "src": "img/github.svg",
+                            "width": 100,
+                            "height": 100
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": true
+                        }
+                    },
+                    "size": {
+                        "value": 1,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 20,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 40,
+                        "color": "#fff",
+                        "opacity": 1,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 120,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 300
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true,
+                "config_demo": {
+                    "hide_card": false,
+                    "background_color": "#b61924",
+                    "background_image": "",
+                    "background_position": "100% 100%",
+                    "background_size": "100%"
+                }
+            }
+
+        );
+    </script>
+    <!--end of particles-->
+
+    <!--title changes-->
+    <script type="text/javascript">
+        document.body.onfocus = function(){
+            document.title = '天气查询';
+        };
+        document.body.onblur = function(){
+            document.title = 'Get Back!';
+        };
+    </script>
+    <!--end of title changes-->
+    <script type="text/javascript">
+        num = parseInt(Math.random() * 5 + 1);
+        document.body.style.backgroundImage = 'url(./img/background/img' + num + '.jpg)';
+    </script>
+    <div style="margin-top: 80px;margin-bottom: 60px;position: absolute;top:0;left :20%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <main class="site-main" role="main">
+                        <div class="hentry c-container">
+                            <div class="padding-content text-center">
+                                <div class="c7d">
+                                    <ul class="t clearfix">
+                                        <li class="sky skyid lv2" id="day-0"><p>2018-12-12</p><img src="http://api.k780.com/upload/weather/d/0.gif"><br><img src="http://api.k780.com/upload/weather/n/0.gif"><p class="tem"><i>1℃/-8℃</i></p><p class="win"><em></em></p><p><em>无持续风向</em></p><i>&lt;3级</i><p></p></li>
+                                        <li class="sky skyid lv2" id="day-1"><p>2018-12-13</p><img src="http://api.k780.com/upload/weather/d/0.gif"><br><img src="http://api.k780.com/upload/weather/n/0.gif"><p class="tem"><i>3℃/-7℃</i></p><p class="win"><em></em></p><p><em>无持续风向转南风</em></p><i>3-4级转&lt;3级</i><p></p></li>
+                                        <li class="sky skyid lv2" id="day-2"><p>2018-12-14</p><img src="http://api.k780.com/upload/weather/d/0.gif"><br><img src="http://api.k780.com/upload/weather/n/0.gif"><p class="tem"><i>3℃/-6℃</i></p><p class="win"><em></em></p><p><em>南风</em></p><i>&lt;3级</i><p></p></li>
+                                        <li class="sky skyid lv2" id="day-3"><p>2018-12-15</p><img src="http://api.k780.com/upload/weather/d/1.gif"><br><img src="http://api.k780.com/upload/weather/n/1.gif"><p class="tem"><i>3℃/-5℃</i></p><p class="win"><em></em></p><p><em>西北风转北风</em></p><i>&lt;3级</i><p></p></li>
+                                        <li class="sky skyid lv2" id="day-4"><p>2018-12-16</p><img src="http://api.k780.com/upload/weather/d/1.gif"><br><img src="http://api.k780.com/upload/weather/n/1.gif"><p class="tem"><i>6℃/-5℃</i></p><p class="win"><em></em></p><p><em>西北风转北风</em></p><i>&lt;3级</i><p></p></li>
+                                        <li class="sky skyid lv2" id="day-5"><p>2018-12-17</p><img src="http://api.k780.com/upload/weather/d/0.gif"><br><img src="http://api.k780.com/upload/weather/n/0.gif"><p class="tem"><i>5℃/-5℃</i></p><p class="win"><em></em></p><p><em>西南风</em></p><i>&lt;3级</i><p></p></li>
+                                        <li class="sky skyid lv2" id="day-6"><p>2018-12-18</p><img src="http://api.k780.com/upload/weather/d/1.gif"><br><img src="http://api.k780.com/upload/weather/n/1.gif"><p class="tem"><i>5℃/-4℃</i></p><p class="win"><em></em></p><p><em>西北风</em></p><i>&lt;3级转4-5级</i><p></p></li>
+                                    </ul>
+                                    <ul class="t clearfix">
+                                        <li class="sky skyid lv2" id="life-0"><p>穿衣指数: 良</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 弱</p><p>洗车指数: 无</p></li>
+                                        <li class="sky skyid lv2" id="life-1"><p>穿衣指数: 中</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 弱</p><p>洗车指数: 无</p></li>
+                                        <li class="sky skyid lv2" id="life-2"><p>穿衣指数: 中</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 最弱</p><p>洗车指数: 无</p></li>
+                                        <li class="sky skyid lv2" id="life-3"><p>穿衣指数: 中</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 最弱</p><p>洗车指数: 无</p></li>
+                                        <li class="sky skyid lv2" id="life-4"><p>穿衣指数: 中</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 最弱</p><p>洗车指数: 无</p></li>
+                                        <li class="sky skyid lv2" id="life-5"><p>穿衣指数: 中</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 最弱</p><p>洗车指数: 无</p></li>
+                                        <li class="sky skyid lv2" id="life-6"><p>穿衣指数: 良</p><p>空气污染扩散指数: 无</p><p>紫外线指数: 最弱</p><p>洗车指数: 无</p></li>
+                                    </ul>
+                                    <p class="text-center" style="color: #fff" id="aqi">今日AQI: 61 良，可以正常进行室外活动</p>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <div class="col-md-4">
+                    <div class="primary-sidebar widget-area" role="complementary">
+                        <aside class="widget c-container">
+                            <div id="check c-container">
+                                <select id="select-area1" onchange="changeArea2(this[selectedIndex].value);">
+                                </select>
+                                <select id="select-area2" onchange="changeArea3(this[selectedIndex].value);">
+                                </select>
+                                <select id="select-area3">
+                                </select>
+                                <div class="btn btn-default" onclick="checkWeather()" id="check">查询</div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    </script>
+</body>
+</html>
